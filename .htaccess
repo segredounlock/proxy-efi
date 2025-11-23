@@ -1,0 +1,52 @@
+# Configuração para Bot Telegram A12+
+# Evita erros 403 Forbidden e protege arquivos sensíveis
+
+# Habilitar PHP
+AddHandler application/x-httpd-php .php
+
+# Desabilitar ModSecurity (causa bloqueios em webhooks)
+<IfModule mod_security.c>
+    SecRuleEngine Off
+</IfModule>
+
+# Permitir acesso ao webhook principal
+<Files "bot_unico_completo.php">
+    Order allow,deny
+    Allow from all
+    Require all granted
+</Files>
+
+# Permitir acesso ao script de diagnóstico
+<Files "CHECK_BOT.php">
+    Order allow,deny
+    Allow from all
+    Require all granted
+</Files>
+
+# Permitir acesso ao webhook legado (se existir)
+<Files "webhook.php">
+    Order allow,deny
+    Allow from all
+    Require all granted
+</Files>
+
+# Proteger pastas de dados contra acesso direto
+<DirectoryMatch "(bot_data|bot_logs)">
+    Order deny,allow
+    Deny from all
+</DirectoryMatch>
+
+# Proteger arquivos JSON
+<FilesMatch "\.(json|lock)$">
+    Order deny,allow
+    Deny from all
+</FilesMatch>
+
+# Desabilitar listagem de diretórios
+Options -Indexes
+
+# Desabilitar acesso a arquivos ocultos
+<FilesMatch "^\.">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
