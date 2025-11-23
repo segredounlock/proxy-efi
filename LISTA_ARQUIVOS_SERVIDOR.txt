@@ -1,0 +1,147 @@
+╔═══════════════════════════════════════════════════════════════════╗
+║           LISTA DE ARQUIVOS PARA ENVIAR AO SERVIDOR              ║
+╚═══════════════════════════════════════════════════════════════════╝
+
+📁 DESTINO NO SERVIDOR: /a12/
+
+═══════════════════════════════════════════════════════════════════
+
+🔴 ARQUIVOS OBRIGATÓRIOS (ENVIAR SEMPRE)
+═══════════════════════════════════════════════════════════════════
+
+1. ⭐ bot_unico_completo.php (111 KB)
+   ├─ O arquivo principal do bot
+   ├─ Contém TODAS as funções (não precisa de outros arquivos)
+   ├─ Versão 5.1 com correção do loop infinito
+   └─ Permissão: 644
+
+2. ⚙️ .htaccess (1 KB)
+   ├─ Configuração do servidor Apache
+   ├─ Desabilita ModSecurity (evita erro 403)
+   ├─ Protege pastas de dados
+   └─ Permissão: 644
+
+═══════════════════════════════════════════════════════════════════
+
+🟡 ARQUIVOS ÚTEIS PARA DIAGNÓSTICO
+═══════════════════════════════════════════════════════════════════
+
+3. 🔍 CHECK_BOT.php (10 KB)
+   ├─ Script de diagnóstico visual
+   ├─ Execute no navegador: /a12/CHECK_BOT.php
+   ├─ Mostra todos os problemas encontrados
+   └─ Permissão: 644
+
+4. 🧹 LIMPAR_WEBHOOK.php (3 KB)
+   ├─ Limpa e reconfigura o webhook
+   ├─ Use se o bot não responder após instalação
+   ├─ Execute no navegador: /a12/LIMPAR_WEBHOOK.php
+   └─ Permissão: 644
+
+5. 🔬 diagnostico_completo.php (11 KB)
+   ├─ Diagnóstico técnico avançado
+   ├─ Versão mais completa do CHECK_BOT.php
+   └─ Permissão: 644
+
+═══════════════════════════════════════════════════════════════════
+
+📖 ARQUIVOS DE DOCUMENTAÇÃO (OPCIONAL)
+═══════════════════════════════════════════════════════════════════
+
+6. 📋 COMO_FAZER_O_BOT_FUNCIONAR.txt
+   ├─ Guia passo-a-passo completo
+   ├─ Instruções detalhadas
+   └─ Soluções para problemas comuns
+
+═══════════════════════════════════════════════════════════════════
+
+📁 PASTAS QUE SERÃO CRIADAS AUTOMATICAMENTE
+═══════════════════════════════════════════════════════════════════
+
+O bot cria estas pastas automaticamente, mas você pode criar 
+manualmente para garantir:
+
+   /a12/bot_data/    (permissão 755)
+   ├─ Armazena dados dos usuários
+   ├─ users.json
+   ├─ transactions.json
+   ├─ orders.json
+   ├─ gifts.json
+   └─ broadcast_queue.json
+
+   /a12/bot_logs/    (permissão 755)
+   ├─ Armazena logs do bot
+   ├─ debug.log
+   ├─ broadcast.log
+   ├─ errors.log
+   └─ updates.log
+
+═══════════════════════════════════════════════════════════════════
+
+❌ ARQUIVOS QUE NÃO DEVEM SER USADOS
+═══════════════════════════════════════════════════════════════════
+
+✗ webhook.php (32 KB)
+  └─ Versão antiga SEM correção do loop infinito
+  └─ NÃO USAR!
+
+✗ bot_com_menu_interativo.php
+  └─ Versão modular que precisa de outros arquivos
+  └─ Substituído por bot_unico_completo.php
+
+✗ bot_completo_melhorado.php
+  └─ Versão modular sem menu interativo
+  └─ Substituído por bot_unico_completo.php
+
+═══════════════════════════════════════════════════════════════════
+
+🎯 RESUMO: SETUP MÍNIMO
+═══════════════════════════════════════════════════════════════════
+
+Para o bot funcionar, você precisa APENAS:
+
+   ✅ bot_unico_completo.php
+   ✅ .htaccess
+   ✅ Criar pastas bot_data/ e bot_logs/
+   ✅ Configurar o webhook
+
+Mais nada!
+
+═══════════════════════════════════════════════════════════════════
+
+📋 CHECKLIST DE VERIFICAÇÃO
+═══════════════════════════════════════════════════════════════════
+
+Antes de testar o bot:
+
+☐ bot_unico_completo.php enviado (111 KB)
+☐ .htaccess enviado e com permissão 644
+☐ Pasta bot_data/ existe com permissão 755
+☐ Pasta bot_logs/ existe com permissão 755
+☐ Webhook configurado (usar LIMPAR_WEBHOOK.php)
+☐ CHECK_BOT.php executado e sem erros críticos
+
+═══════════════════════════════════════════════════════════════════
+
+🔗 LINKS ÚTEIS
+═══════════════════════════════════════════════════════════════════
+
+Token do bot:
+8573849766:AAErNoIGk0D3m4o66r65sifKombG9cZuGKA
+
+URL do webhook:
+https://buscalotter.com/a12/bot_unico_completo.php
+
+Configurar webhook:
+https://api.telegram.org/bot8573849766:AAErNoIGk0D3m4o66r65sifKombG9cZuGKA/setWebhook?url=https://buscalotter.com/a12/bot_unico_completo.php
+
+Ver status do webhook:
+https://api.telegram.org/bot8573849766:AAErNoIGk0D3m4o66r65sifKombG9cZuGKA/getWebhookInfo
+
+Limpar webhook:
+https://api.telegram.org/bot8573849766:AAErNoIGk0D3m4o66r65sifKombG9cZuGKA/deleteWebhook?drop_pending_updates=true
+
+═══════════════════════════════════════════════════════════════════
+Última atualização: 23/11/2024
+Versão do bot: 5.1
+═══════════════════════════════════════════════════════════════════

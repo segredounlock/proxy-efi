@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🔍 Diagnóstico do Bot Telegram</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            opacity: 0.9;
+            font-size: 1.1em;
+        }
+        
+        .content {
+            padding: 30px;
+        }
+        
+        .test-section {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-left: 5px solid #667eea;
+        }
+        
+        .test-section h2 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+        
+        .test-item {
+            background: white;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 8px;
+            border: 2px solid #e0e0e0;
+            transition: all 0.3s;
+        }
+        
+        .test-item:hover {
+            border-color: #667eea;
+            transform: translateX(5px);
+        }
+        
+        .test-item h3 {
+            color: #555;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+        
+        .test-item .status {
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        
+        .status.pending {
+            background: #ffc107;
+            color: #333;
+        }
+        
+        .status.success {
+            background: #4caf50;
+            color: white;
+        }
+        
+        .status.error {
+            background: #f44336;
+            color: white;
+        }
+        
+        .status.warning {
+            background: #ff9800;
+            color: white;
+        }
+        
+        .test-result {
+            margin-top: 10px;
+            padding: 10px;
+            background: #f5f5f5;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+        
+        .button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 8px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: inline-block;
+            margin: 10px 5px;
+        }
+        
+        .button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+        
+        .button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .summary {
+            background: #e3f2fd;
+            border-left: 5px solid #2196f3;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 30px;
+        }
+        
+        .summary h2 {
+            color: #1976d2;
+            margin-bottom: 15px;
+        }
+        
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #bbdefb;
+        }
+        
+        .summary-item:last-child {
+            border-bottom: none;
+        }
+        
+        .emoji {
+            font-size: 1.5em;
+            margin-right: 10px;
+        }
+        
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #667eea;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-left: 10px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .code {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            margin: 10px 0;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .solution {
+            background: #fff3cd;
+            border-left: 5px solid #ffc107;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+        
+        .solution h4 {
+            color: #856404;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🤖 Diagnóstico do Bot Telegram</h1>
+            <p>Sistema completo de verificação e correção</p>
+        </div>
+        
+        <div class="content">
+            <div class="test-section">
+                <h2>🎯 Ações Rápidas</h2>
+                <button class="button" onclick="runAllTests()">🔍 Executar Todos os Testes</button>
+                <button class="button" onclick="fixWebhook()">🔧 Limpar e Reconfigurar Webhook</button>
+                <button class="button" onclick="openTelegramBot()">📱 Testar Bot no Telegram</button>
+            </div>
+            
+            <div class="test-section">
+                <h2>📋 Testes Individuais</h2>
+                
+                <div class="test-item">
+                    <h3><span class="emoji">🤖</span>1. Status do Bot</h3>
+                    <span class="status pending" id="status-bot">Aguardando...</span>
+                    <button class="button" onclick="testBot()">Testar</button>
+                    <div class="test-result" id="result-bot" style="display:none;"></div>
+                </div>
+                
+                <div class="test-item">
+                    <h3><span class="emoji">🔗</span>2. Configuração do Webhook</h3>
+                    <span class="status pending" id="status-webhook">Aguardando...</span>
+                    <button class="button" onclick="testWebhook()">Testar</button>
+                    <div class="test-result" id="result-webhook" style="display:none;"></div>
+                </div>
+                
+                <div class="test-item">
+                    <h3><span class="emoji">📁</span>3. Arquivo do Bot no Servidor</h3>
+                    <span class="status pending" id="status-file">Aguardando...</span>
+                    <button class="button" onclick="testFile()">Testar</button>
+                    <div class="test-result" id="result-file" style="display:none;"></div>
+                </div>
+                
+                <div class="test-item">
+                    <h3><span class="emoji">🌐</span>4. Acesso HTTP ao Webhook</h3>
+                    <span class="status pending" id="status-http">Aguardando...</span>
+                    <button class="button" onclick="testHTTP()">Testar</button>
+                    <div class="test-result" id="result-http" style="display:none;"></div>
+                </div>
+            </div>
+            
+            <div class="summary" id="summary" style="display:none;">
+                <h2>📊 Resumo do Diagnóstico</h2>
+                <div id="summary-content"></div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        const BOT_TOKEN = '8573849766:AAErNoIGk0D3m4o66r65sifKombG9cZuGKA';
+        const WEBHOOK_URL = 'https://buscalotter.com/a12/bot_unico_completo.php';
+        
+        let testResults = {
+            bot: null,
+            webhook: null,
+            file: null,
+            http: null
+        };
+        
+        async function testBot() {
+            setStatus('bot', 'pending', 'Testando...');
+            showResult('bot', '');
+            
+            try {
+                const response = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/getMe`);
+                const data = await response.json();
+                
+                if (data.ok) {
+                    setStatus('bot', 'success', '✅ Ativo');
+                    showResult('bot', `Bot: @${data.result.username}\nID: ${data.result.id}\nNome: ${data.result.first_name}`);
+                    testResults.bot = true;
+                } else {
+                    setStatus('bot', 'error', '❌ Erro');
+                    showResult('bot', `Erro: ${JSON.stringify(data)}`);
+                    testResults.bot = false;
+                }
+            } catch (error) {
+                setStatus('bot', 'error', '❌ Falha');
+                showResult('bot', `Erro de conexão: ${error.message}`);
+                testResults.bot = false;
+            }
+            
+            updateSummary();
+        }
+        
+        async function testWebhook() {
+            setStatus('webhook', 'pending', 'Testando...');
+            showResult('webhook', '');
+            
+            try {
+                const response = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/getWebhookInfo`);
+                const data = await response.json();
+                
+                if (data.ok) {
+                    const info = data.result;
+                    let result = `URL: ${info.url || '❌ NÃO CONFIGURADO'}\n`;
+                    result += `Updates pendentes: ${info.pending_update_count}\n`;
+                    result += `Conexões máximas: ${info.max_connections || 'N/A'}`;
+                    
+                    if (info.last_error_date) {
+                        const errorDate = new Date(info.last_error_date * 1000);
+                        result += `\n\n🚨 ÚLTIMO ERRO:\n`;
+                        result += `Data: ${errorDate.toLocaleString()}\n`;
+                        result += `Mensagem: ${info.last_error_message}`;
+                        
+                        setStatus('webhook', 'error', '❌ Com Erros');
+                        testResults.webhook = false;
+                        
+                        // Adicionar solução
+                        let solution = '';
+                        if (info.last_error_message.includes('403')) {
+                            solution = '<div class="solution"><h4>💡 Solução para 403 Forbidden:</h4>1. Verificar arquivo .htaccess<br>2. Desabilitar ModSecurity<br>3. Verificar permissões (644)</div>';
+                        } else if (info.last_error_message.includes('404')) {
+                            solution = '<div class="solution"><h4>💡 Solução para 404 Not Found:</h4>1. Verificar se bot_unico_completo.php existe no servidor<br>2. Verificar URL do webhook</div>';
+                        } else if (info.last_error_message.includes('500')) {
+                            solution = '<div class="solution"><h4>💡 Solução para 500 Internal Server Error:</h4>1. Verificar logs do servidor<br>2. Verificar sintaxe do PHP<br>3. Verificar permissões das pastas</div>';
+                        }
+                        
+                        showResult('webhook', result + solution);
+                    } else if (!info.url) {
+                        setStatus('webhook', 'warning', '⚠️ Não configurado');
+                        testResults.webhook = false;
+                        showResult('webhook', result + '<div class="solution"><h4>💡 Webhook não está configurado</h4>Clique em "Limpar e Reconfigurar Webhook"</div>');
+                    } else {
+                        setStatus('webhook', 'success', '✅ Configurado');
+                        testResults.webhook = true;
+                        showResult('webhook', result);
+                    }
+                }
+            } catch (error) {
+                setStatus('webhook', 'error', '❌ Falha');
+                showResult('webhook', `Erro: ${error.message}`);
+                testResults.webhook = false;
+            }
+            
+            updateSummary();
+        }
+        
+        async function testFile() {
+            setStatus('file', 'pending', 'Testando...');
+            showResult('file', '');
+            
+            // Este teste precisa ser feito via PHP no servidor
+            // Vamos apenas verificar se o CHECK_BOT.php está disponível
+            showResult('file', 'Este teste deve ser executado via CHECK_BOT.php no servidor.\n\n' +
+                               'Execute: https://buscalotter.com/a12/CHECK_BOT.php');
+            setStatus('file', 'warning', '⚠️ Ver CHECK_BOT.php');
+            testResults.file = null;
+            
+            updateSummary();
+        }
+        
+        async function testHTTP() {
+            setStatus('http', 'pending', 'Testando...');
+            showResult('http', '');
+            
+            try {
+                const response = await fetch(WEBHOOK_URL, { 
+                    method: 'GET',
+                    mode: 'no-cors' // Evitar problemas de CORS
+                });
+                
+                // Como é no-cors, não conseguimos ler a resposta
+                // Mas se não deu erro, o arquivo está acessível
+                setStatus('http', 'warning', '⚠️ Testar manualmente');
+                showResult('http', `Teste: ${WEBHOOK_URL}\n\nAbra esta URL no navegador para verificar:\n- Se retorna página em branco = ✅ OK\n- Se retorna erro 403 = ❌ Problema com .htaccess\n- Se retorna erro 404 = ❌ Arquivo não encontrado`);
+                testResults.http = null;
+            } catch (error) {
+                setStatus('http', 'error', '❌ Inacessível');
+                showResult('http', `Erro: ${error.message}\n\nO arquivo pode não estar acessível via HTTP.`);
+                testResults.http = false;
+            }
+            
+            updateSummary();
+        }
+        
+        async function fixWebhook() {
+            if (!confirm('Isso vai deletar o webhook atual e reconfigurar.\n\nContinuar?')) return;
+            
+            const button = event.target;
+            button.disabled = true;
+            button.innerHTML = '⏳ Processando...';
+            
+            try {
+                // 1. Deletar webhook
+                await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/deleteWebhook?drop_pending_updates=true`);
+                
+                // Aguardar 2 segundos
+                await new Promise(resolve => setTimeout(resolve, 2000));
+                
+                // 2. Configurar novo webhook
+                const response = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/setWebhook?url=${encodeURIComponent(WEBHOOK_URL)}&max_connections=40&drop_pending_updates=true`);
+                const data = await response.json();
+                
+                if (data.ok) {
+                    alert('✅ Webhook reconfigurado com sucesso!\n\nAgora teste enviando /start para o bot.');
+                    testWebhook(); // Testar novamente
+                } else {
+                    alert('❌ Erro ao configurar webhook:\n\n' + JSON.stringify(data));
+                }
+            } catch (error) {
+                alert('❌ Erro: ' + error.message);
+            } finally {
+                button.disabled = false;
+                button.innerHTML = '🔧 Limpar e Reconfigurar Webhook';
+            }
+        }
+        
+        async function runAllTests() {
+            await testBot();
+            await new Promise(resolve => setTimeout(resolve, 1000));
+            await testWebhook();
+            await new Promise(resolve => setTimeout(resolve, 1000));
+            await testFile();
+            await new Promise(resolve => setTimeout(resolve, 1000));
+            await testHTTP();
+        }
+        
+        function openTelegramBot() {
+            window.open('https://t.me/Bypasa12_bot', '_blank');
+        }
+        
+        function setStatus(test, type, text) {
+            const statusEl = document.getElementById(`status-${test}`);
+            statusEl.className = `status ${type}`;
+            statusEl.textContent = text;
+        }
+        
+        function showResult(test, text) {
+            const resultEl = document.getElementById(`result-${test}`);
+            resultEl.innerHTML = text.replace(/\n/g, '<br>');
+            resultEl.style.display = text ? 'block' : 'none';
+        }
+        
+        function updateSummary() {
+            const summaryEl = document.getElementById('summary');
+            const contentEl = document.getElementById('summary-content');
+            
+            let passed = 0;
+            let failed = 0;
+            let pending = 0;
+            
+            for (let key in testResults) {
+                if (testResults[key] === true) passed++;
+                else if (testResults[key] === false) failed++;
+                else pending++;
+            }
+            
+            let html = `
+                <div class="summary-item">
+                    <span>✅ Testes Passando</span>
+                    <strong>${passed}</strong>
+                </div>
+                <div class="summary-item">
+                    <span>❌ Testes Falhando</span>
+                    <strong>${failed}</strong>
+                </div>
+                <div class="summary-item">
+                    <span>⏳ Testes Pendentes</span>
+                    <strong>${pending}</strong>
+                </div>
+            `;
+            
+            if (failed === 0 && pending === 0 && passed > 0) {
+                html += `<div style="margin-top: 20px; padding: 15px; background: #d4edda; border-radius: 5px; color: #155724;">
+                    <strong>🎉 Tudo funcionando!</strong><br>
+                    Teste o bot enviando /start no Telegram
+                </div>`;
+            } else if (failed > 0) {
+                html += `<div style="margin-top: 20px; padding: 15px; background: #f8d7da; border-radius: 5px; color: #721c24;">
+                    <strong>⚠️ Foram encontrados problemas</strong><br>
+                    Veja as soluções sugeridas acima ou execute LIMPAR_WEBHOOK.php
+                </div>`;
+            }
+            
+            contentEl.innerHTML = html;
+            summaryEl.style.display = 'block';
+        }
+    </script>
+</body>
+</html>
