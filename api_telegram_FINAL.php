@@ -727,7 +727,13 @@ function cmd_start($chat_id, $name) {
         $msg .= "🔸 /gifts_stats - Estatísticas de gifts\n";
         $msg .= "🔸 /removerplano [id] - Remover plano\n";
         $msg .= "🔸 /remover_gift [CODE] - Remover gift\n";
-        $msg .= "🔸 /backup - Fazer backup manual\n";
+        $msg .= "🔸 /backup - Fazer backup manual\n\n";
+        $msg .= "<b>🎁 AUTO-GIFT (NOVO!):</b>\n";
+        $msg .= "🔸 /autogift_config - Ver configuração\n";
+        $msg .= "🔸 /autogift_start - Ativar sistema\n";
+        $msg .= "🔸 /autogift_stop - Desativar sistema\n";
+        $msg .= "🔸 /autogift_set - Configurar parâmetros\n";
+        $msg .= "🔸 /autogift_test - Teste manual\n";
     }
 
     $msg .= "\n<b>🔓 SERVIÇO:</b>\n";
@@ -1796,6 +1802,287 @@ function cmd_backup($chat_id) {
     }
 }
 
+// ==================== AUTO-GIFT FUNCTIONS ====================
+
+function load_auto_gift_config() {
+    $config_file = DATA_DIR . '/auto_gift_config.json';
+    $default = [
+        'enabled' => false,
+        'interval_minutes' => 60,
+        'gift_quantity' => 1,
+        'gift_mode' => 'credit',
+        'gift_param' => '5.00',
+        'gift_uses' => 1,
+        'broadcast_message' => "🎁 <b>GIFT AUTOMÁTICO!</b>\n\nUse o código abaixo para resgatar:\n\n<code>{CODE}</code>\n\n⚡ Válido por tempo limitado!",
+        'last_run' => null,
+        'total_runs' => 0,
+        'total_gifts_sent' => 0
+    ];
+    
+    if (!file_exists($config_file)) {
+        db_write($config_file, $default);
+        return $default;
+    }
+    
+    $config = db_read($config_file, $default);
+    return array_merge($default, $config);
+}
+
+function save_auto_gift_config($config) {
+    $config_file = DATA_DIR . '/auto_gift_config.json';
+    return db_write($config_file, $config);
+}
+
+function cmd_autogift_config($chat_id) {
+    $user = get_user($chat_id);
+    if (!$user['is_admin']) {
+        send_message($chat_id, "❌ Apenas administradores podem usar este comando.");
+        return;
+    }
+    
+    $config = load_auto_gift_config();
+    
+    $status_icon = $config['enabled'] ? '✅ ATIVO' : '❌ DESATIVADO';
+    
+    $msg = "⚙️ <b>CONFIGURAÇÃO AUTO-GIFT</b>\n\n";
+    $msg .= "🔘 Status: <b>{$status_icon}</b>\n\n";
+    $msg .= "📊 <b>PARÂMETROS:</b>\n";
+    $msg .= "━━━━━━━━━━━━━━━━━━━━\n";
+    $msg .= "⏱️ Intervalo: <b>{$config['interval_minutes']} minutos</b>\n";
+    $msg .= "📦 Quantidade: <b>{$config['gift_quantity']} gift(s)</b>\n";
+    $msg .= "🎯 Modo: <b>{$config['gift_mode']}</b>\n";
+    $msg .= "💰 Valor: <b>{$config['gift_param']}</b>\n";
+    $msg .= "🔢 Usos por gift: <b>{$config['gift_uses']}</b>\n\n";
+    
+    if ($config['last_run']) {
+        $last_run_time = strtotime($config['last_run']);
+        $next_run_time = $last_run_time + ($config['interval_minutes'] * 60);
+        $now = time();
+        
+        if ($next_run_time > $now) {
+            $minutes_left = ceil(($next_run_time - $now) / 60);
+            $msg .= "⏰ <b>PRÓXIMA EXECUÇÃO:</b>\n";
+            $msg .= "Em <b>{$minutes_left} minutos</b>\n";
+            $msg .= "(" . date('d/m H:i', $next_run_time) . ")\n\n";
+        } else {
+            $msg .= "⏰ <b>PRÓXIMA EXECUÇÃO:</b>\n";
+            $msg .= "Aguardando cron...\n\n";
+        }
+        
+        $msg .= "📅 Última execução:\n";
+        $msg .= date('d/m/Y H:i:s', $last_run_time) . "\n\n";
+    }
+    
+    $msg .= "📈 <b>ESTATÍSTICAS:</b>\n";
+    $msg .= "━━━━━━━━━━━━━━━━━━━━\n";
+    $msg .= "🔄 Total de execuções: <b>{$config['total_runs']}</b>\n";
+    $msg .= "🎁 Total de gifts enviados: <b>{$config['total_gifts_sent']}</b>\n\n";
+    
+    $msg .= "📝 <b>MENSAGEM DE BROADCAST:</b>\n";
+    $msg .= "━━━━━━━━━━━━━━━━━━━━\n";
+    $msg .= "<i>" . str_replace('{CODE}', '[CÓDIGO]', htmlspecialchars($config['broadcast_message'])) . "</i>\n\n";
+    
+    $msg .= "💡 <b>COMANDOS DISPONÍVEIS:</b>\n";
+    $msg .= "/autogift_start - Ativar sistema\n";
+    $msg .= "/autogift_stop - Desativar sistema\n";
+    $msg .= "/autogift_set - Configurar parâmetros\n";
+    $msg .= "/autogift_test - Testar (execução única)\n";
+    $msg .= "/autogift_config - Ver configuração";
+    
+    send_message($chat_id, $msg);
+}
+
+function cmd_autogift_start($chat_id) {
+    $user = get_user($chat_id);
+    if (!$user['is_admin']) {
+        send_message($chat_id, "❌ Apenas administradores podem usar este comando.");
+        return;
+    }
+    
+    $config = load_auto_gift_config();
+    
+    if ($config['enabled']) {
+        send_message($chat_id, "⚠️ O sistema auto-gift já está <b>ATIVO</b>\n\nUse /autogift_config para ver detalhes");
+        return;
+    }
+    
+    $config['enabled'] = true;
+    save_auto_gift_config($config);
+    
+    $msg = "✅ <b>AUTO-GIFT ATIVADO COM SUCESSO!</b>\n\n";
+    $msg .= "🎯 O sistema agora irá:\n";
+    $msg .= "• Gerar {$config['gift_quantity']} gift(s) a cada {$config['interval_minutes']} minutos\n";
+    $msg .= "• Modo: {$config['gift_mode']}\n";
+    $msg .= "• Valor: {$config['gift_param']}\n";
+    $msg .= "• Enviar automaticamente para todos os usuários\n\n";
+    $msg .= "⏰ Próxima execução em até {$config['interval_minutes']} minutos\n\n";
+    $msg .= "💡 Use /autogift_config para monitorar";
+    
+    send_message($chat_id, $msg);
+    bot_log("AUTO_GIFT_ENABLED by admin:{$chat_id}");
+}
+
+function cmd_autogift_stop($chat_id) {
+    $user = get_user($chat_id);
+    if (!$user['is_admin']) {
+        send_message($chat_id, "❌ Apenas administradores podem usar este comando.");
+        return;
+    }
+    
+    $config = load_auto_gift_config();
+    
+    if (!$config['enabled']) {
+        send_message($chat_id, "⚠️ O sistema auto-gift já está <b>DESATIVADO</b>");
+        return;
+    }
+    
+    $config['enabled'] = false;
+    save_auto_gift_config($config);
+    
+    $msg = "🛑 <b>AUTO-GIFT DESATIVADO</b>\n\n";
+    $msg .= "O sistema não irá mais gerar gifts automaticamente.\n\n";
+    $msg .= "📊 Estatísticas finais:\n";
+    $msg .= "• Total de execuções: {$config['total_runs']}\n";
+    $msg .= "• Total de gifts enviados: {$config['total_gifts_sent']}\n\n";
+    $msg .= "💡 Use /autogift_start para reativar";
+    
+    send_message($chat_id, $msg);
+    bot_log("AUTO_GIFT_DISABLED by admin:{$chat_id}");
+}
+
+function cmd_autogift_set($chat_id, $args) {
+    $user = get_user($chat_id);
+    if (!$user['is_admin']) {
+        send_message($chat_id, "❌ Apenas administradores podem usar este comando.");
+        return;
+    }
+    
+    if (empty($args)) {
+        $msg = "⚙️ <b>CONFIGURAR AUTO-GIFT</b>\n\n";
+        $msg .= "📝 <b>Uso:</b>\n";
+        $msg .= "<code>/autogift_set [intervalo] [quantidade] [modo] [valor] [usos]</code>\n\n";
+        $msg .= "<b>📋 EXEMPLOS:</b>\n\n";
+        $msg .= "🔸 <code>/autogift_set 60 1 credit 5.00 1</code>\n";
+        $msg .= "   → A cada 60 min, 1 gift de $5 com 1 uso\n\n";
+        $msg .= "🔸 <code>/autogift_set 120 3 credit 10.00 1</code>\n";
+        $msg .= "   → A cada 2h, 3 gifts de $10 com 1 uso\n\n";
+        $msg .= "🔸 <code>/autogift_set 30 1 auto 7d 1</code>\n";
+        $msg .= "   → A cada 30 min, 1 gift de 7 dias\n\n";
+        $msg .= "<b>⚙️ PARÂMETROS:</b>\n";
+        $msg .= "• <b>intervalo</b>: minutos (mín: 5, máx: 1440)\n";
+        $msg .= "• <b>quantidade</b>: número de gifts (1-10)\n";
+        $msg .= "• <b>modo</b>: credit ou auto\n";
+        $msg .= "• <b>valor</b>: valor em $ ou dias (7d, 15d, 30d)\n";
+        $msg .= "• <b>usos</b>: quantas vezes pode ser usado\n\n";
+        $msg .= "💡 Use /autogift_config para ver configuração atual";
+        send_message($chat_id, $msg);
+        return;
+    }
+    
+    $parts = explode(' ', trim($args));
+    
+    if (count($parts) < 4) {
+        send_message($chat_id, "❌ Parâmetros insuficientes\n\nUse: <code>/autogift_set [intervalo] [quantidade] [modo] [valor] [usos]</code>\n\nExemplo: <code>/autogift_set 60 1 credit 5.00 1</code>");
+        return;
+    }
+    
+    $interval = intval($parts[0]);
+    $quantity = intval($parts[1]);
+    $mode = strtolower($parts[2]);
+    $param = $parts[3];
+    $uses = isset($parts[4]) ? intval($parts[4]) : 1;
+    
+    // Validações
+    if ($interval < 5 || $interval > 1440) {
+        send_message($chat_id, "❌ Intervalo inválido\n\nDeve ser entre 5 e 1440 minutos (5 min a 24h)");
+        return;
+    }
+    
+    if ($quantity < 1 || $quantity > 10) {
+        send_message($chat_id, "❌ Quantidade inválida\n\nDeve ser entre 1 e 10 gifts");
+        return;
+    }
+    
+    if (!in_array($mode, ['credit', 'auto'])) {
+        send_message($chat_id, "❌ Modo inválido\n\nUse: credit ou auto");
+        return;
+    }
+    
+    if ($uses < 1 || $uses > 100) {
+        send_message($chat_id, "❌ Usos inválido\n\nDeve ser entre 1 e 100");
+        return;
+    }
+    
+    // Atualizar configuração
+    $config = load_auto_gift_config();
+    $config['interval_minutes'] = $interval;
+    $config['gift_quantity'] = $quantity;
+    $config['gift_mode'] = $mode;
+    $config['gift_param'] = $param;
+    $config['gift_uses'] = $uses;
+    save_auto_gift_config($config);
+    
+    $msg = "✅ <b>CONFIGURAÇÃO ATUALIZADA!</b>\n\n";
+    $msg .= "📊 <b>NOVOS PARÂMETROS:</b>\n";
+    $msg .= "━━━━━━━━━━━━━━━━━━━━\n";
+    $msg .= "⏱️ Intervalo: <b>{$interval} minutos</b>\n";
+    $msg .= "📦 Quantidade: <b>{$quantity} gift(s)</b>\n";
+    $msg .= "🎯 Modo: <b>{$mode}</b>\n";
+    $msg .= "💰 Valor: <b>{$param}</b>\n";
+    $msg .= "🔢 Usos: <b>{$uses}</b>\n\n";
+    
+    if ($config['enabled']) {
+        $msg .= "✅ Sistema está ATIVO\n";
+        $msg .= "⏰ As novas configurações entrarão em vigor na próxima execução";
+    } else {
+        $msg .= "⚠️ Sistema está DESATIVADO\n";
+        $msg .= "💡 Use /autogift_start para ativar";
+    }
+    
+    send_message($chat_id, $msg);
+    bot_log("AUTO_GIFT_CONFIG_UPDATED: interval:{$interval}min qty:{$quantity} mode:{$mode} param:{$param} uses:{$uses} by admin:{$chat_id}");
+}
+
+function cmd_autogift_test($chat_id) {
+    $user = get_user($chat_id);
+    if (!$user['is_admin']) {
+        send_message($chat_id, "❌ Apenas administradores podem usar este comando.");
+        return;
+    }
+    
+    send_message($chat_id, "🧪 <b>TESTE DE AUTO-GIFT</b>\n\nExecutando geração de teste...\n\nAguarde...");
+    
+    // Executar o script de auto-gift
+    $script_path = __DIR__ . '/auto_gift_cron.php';
+    
+    if (!file_exists($script_path)) {
+        send_message($chat_id, "❌ Arquivo auto_gift_cron.php não encontrado!");
+        return;
+    }
+    
+    // Executar em background e capturar output
+    $output = [];
+    $return_var = 0;
+    exec("php " . escapeshellarg($script_path) . " 2>&1", $output, $return_var);
+    
+    $output_text = implode("\n", $output);
+    
+    $msg = "📊 <b>RESULTADO DO TESTE:</b>\n\n";
+    
+    if ($return_var === 0) {
+        $msg .= "✅ Execução concluída com sucesso\n\n";
+    } else {
+        $msg .= "⚠️ Execução finalizada com código: {$return_var}\n\n";
+    }
+    
+    $msg .= "<b>📝 Output:</b>\n";
+    $msg .= "<code>" . htmlspecialchars(substr($output_text, 0, 3000)) . "</code>\n\n";
+    $msg .= "💡 Verifique também o log em:\n";
+    $msg .= "<code>" . LOGS_DIR . "/auto_gift.log</code>";
+    
+    send_message($chat_id, $msg);
+}
+
 // ==================== MAIN HANDLER ====================
 
 $raw = file_get_contents('php://input');
@@ -1964,6 +2251,22 @@ if ($chat_id) {
             break;
         case '/backup':
             cmd_backup($chat_id);
+            break;
+        case '/autogift_config':
+            cmd_autogift_config($chat_id);
+            break;
+        case '/autogift_start':
+            cmd_autogift_start($chat_id);
+            break;
+        case '/autogift_stop':
+            cmd_autogift_stop($chat_id);
+            break;
+        case '/autogift_set':
+            $args_text = trim(str_replace('/autogift_set', '', $text));
+            cmd_autogift_set($chat_id, $args_text);
+            break;
+        case '/autogift_test':
+            cmd_autogift_test($chat_id);
             break;
         default:
             if (strpos($text, '/') === 0) {
