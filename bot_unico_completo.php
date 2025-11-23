@@ -2153,11 +2153,24 @@ if ($chat_id) {
     // DETECTAR BROADCAST POR RESPOSTA
     if ($reply_to_message && !empty($text) && strpos($text, '/') !== 0) {
         $user = get_user($chat_id);
-        if ($user['is_admin']) {
+        
+        // Verificar se a mensagem respondida é do próprio bot
+        $is_bot_message = isset($reply_to_message['from']['is_bot']) && $reply_to_message['from']['is_bot'];
+        
+        // Verificar se é mensagem de broadcast concluído
+        $is_broadcast_complete = isset($reply_to_message['text']) && 
+                                  (strpos($reply_to_message['text'], 'BROADCAST CONCLUÍDO') !== false ||
+                                   strpos($reply_to_message['text'], 'BROADCAST EM ANDAMENTO') !== false ||
+                                   strpos($reply_to_message['text'], 'BROADCAST CANCELADO') !== false);
+        
+        // Só processar se for admin E não for resposta a mensagem do bot E não for mensagem de status
+        if ($user['is_admin'] && !$is_bot_message && !$is_broadcast_complete) {
             bot_log("BROADCAST_REPLY_DETECTED: Admin {$chat_id} respondendo mensagem");
             cmd_broadcast_reply($chat_id, $reply_to_message);
             http_response_code(200);
             exit;
+        } elseif ($user['is_admin'] && ($is_bot_message || $is_broadcast_complete)) {
+            bot_log("BROADCAST_REPLY_BLOCKED: Admin tentou responder mensagem do bot (loop prevention)");
         }
     }
 
