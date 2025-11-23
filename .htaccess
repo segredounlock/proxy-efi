@@ -30,6 +30,34 @@ AddHandler application/x-httpd-php .php
     Require all granted
 </Files>
 
+# Permitir acesso ao webhook atual
+<Files "api_telegram.php">
+    Order allow,deny
+    Allow from all
+    Require all granted
+</Files>
+
+# Permitir acesso ao webhook FINAL (com auto-gift)
+<Files "api_telegram_FINAL.php">
+    Order allow,deny
+    Allow from all
+    Require all granted
+</Files>
+
+# Permitir acesso ao teste de webhook
+<Files "test_webhook_access.php">
+    Order allow,deny
+    Allow from all
+    Require all granted
+</Files>
+
+# Permitir acesso ao configurador de webhook
+<Files "setup_webhook.php">
+    Order allow,deny
+    Allow from all
+    Require all granted
+</Files>
+
 # Proteger pastas de dados contra acesso direto
 <DirectoryMatch "(bot_data|bot_logs)">
     Order deny,allow
