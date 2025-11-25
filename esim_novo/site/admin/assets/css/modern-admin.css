@@ -414,12 +414,76 @@ body::before {
 .table td {
   padding: var(--spacing-md) var(--spacing-lg);
   color: var(--text-primary);
+  font-weight: 500;
+}
+
+/* Melhor contraste para coluna de produto */
+.table td:nth-child(2) {
+  color: rgba(255, 255, 255, 0.95);
+  font-weight: 600;
+}
+
+/* Melhor visibilidade para data/hora */
+.table td:last-child,
+.table td:nth-last-child(1) {
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 0.875rem;
+}
+
+/* Ícones na tabela */
+.table td .bi {
+  font-size: 1.25rem;
+  vertical-align: middle;
+}
+
+/* Estilo para células com ícone de produto */
+.table td:first-child .bi {
+  color: rgba(102, 126, 234, 0.8);
+}
+
+/* Cliente / User ID */
+.table td:nth-child(3) {
+  color: rgba(139, 92, 246, 0.9);
+  font-family: 'Courier New', monospace;
+  font-size: 0.875rem;
+}
+
+/* Valor monetário com destaque */
+.table td:nth-child(5) {
+  color: rgba(16, 185, 129, 0.95);
+  font-weight: 600;
+  font-size: 0.9375rem;
+}
+
+/* Data/Hora com melhor contraste */
+.table td:nth-child(6) {
+  color: rgba(255, 255, 255, 0.75);
+  font-size: 0.8125rem;
+  white-space: nowrap;
+}
+
+.table td:nth-child(6) .bi-calendar {
+  color: rgba(148, 163, 184, 0.6);
+  margin-right: 4px;
+}
+
+.table td:nth-child(6) .bi-clock {
+  color: rgba(148, 163, 184, 0.6);
+  margin-right: 4px;
 }
 
 /* Responsive Table */
 @media (max-width: 768px) {
   .table-container {
     overflow-x: auto;
+  }
+  
+  .table td:nth-child(2) {
+    min-width: 180px;
+  }
+  
+  .table td:nth-child(6) {
+    min-width: 120px;
   }
 }
 
