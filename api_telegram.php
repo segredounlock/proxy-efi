@@ -90,7 +90,6 @@ foreach ([DATA_DIR, LOGS_DIR, BACKUP_DIR] as $dir) {
 require_once __DIR__ . '/referral_system.php';
 require_once __DIR__ . '/broadcast_system.php';
 
-
 // ==================== UTILITIES ====================
 function db_read($file, $default = []) {
     if (!file_exists($file)) {
@@ -330,10 +329,6 @@ function charge_credits($chat_id, $amount, $type, $meta = []) {
     $users[$id]['total_spent'] = round($users[$id]['total_spent'] + floatval($amount), 2);
     if ($type === 'order_success') {
         $users[$id]['total_orders']++;
-        // Completar indicação na primeira compra
-        if ($users[$id]['total_orders'] == 1) {
-            complete_referral($chat_id);
-        }
     }
 
     db_write(USERS_FILE, $users);
@@ -898,6 +893,9 @@ function cmd_addsn($chat_id, $serial) {
         if ($result['success']) {
             add_order($chat_id, $serial, $result['order_id'], 'success', 0.0);
             add_transaction($chat_id, 'order_success', 0.0, ['serial'=>$serial, 'order_id'=>$result['order_id'], 'plan'=>true]);
+            
+            // Completa indicação na primeira compra
+            complete_referral($chat_id);
 
             $msg = "✅ <b>PEDIDO REALIZADO COM SUCESSO (PLANO)</b>\n\n";
             $msg .= "🔓 Serviço: SEGREDO A12+ Activation Lock Bypass\n";
@@ -949,6 +947,10 @@ function cmd_addsn($chat_id, $serial) {
         ]);
 
         add_order($chat_id, $serial, $result['order_id'], 'success', SERVICE_COST);
+        
+        // Completa indicação na primeira compra
+        complete_referral($chat_id);
+        
         $user = get_user($chat_id);
 
         $msg = "✅ <b>PEDIDO REALIZADO COM SUCESSO</b>\n\n";
@@ -1910,19 +1912,19 @@ if ($chat_id) {
         case '/start':
         case '/help':
             cmd_start($chat_id, $name);
-            // Detectar código de indicação
+            // Detectar código de indicação no parâmetro
             if (isset($arg1) && strpos($arg1, 'REF') === 0) {
                 handle_referral_start($chat_id, $arg1);
             }
             break;
         case '/balance':
+            cmd_balance($chat_id);
+            break;
         case '/indicar':
             cmd_indicar($chat_id);
             break;
         case '/meusaldo':
             cmd_meusaldo($chat_id);
-            break;
-            cmd_balance($chat_id);
             break;
         case '/buy':
             cmd_buy($chat_id);
