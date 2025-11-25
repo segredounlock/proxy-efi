@@ -417,59 +417,87 @@ body::before {
   font-weight: 500;
 }
 
-/* Melhor contraste para coluna de produto */
-.table td:nth-child(2) {
-  color: rgba(255, 255, 255, 0.95);
+/* ID (#1056) - Azul suave */
+.table td:first-child {
+  color: #A0B8E6;
   font-weight: 600;
 }
 
-/* Melhor visibilidade para data/hora */
-.table td:last-child,
-.table td:nth-last-child(1) {
-  color: rgba(255, 255, 255, 0.85);
-  font-size: 0.875rem;
+/* PRODUTO (VIVO - 44Gb 14$) - Roxo/Violeta como na imagem */
+.table td:nth-child(2) {
+  color: #8E24AA;
+  font-weight: 600;
 }
 
-/* Ícones na tabela */
-.table td .bi {
-  font-size: 1.25rem;
-  vertical-align: middle;
+/* Ícones de coroa no produto - Mesmo roxo */
+.table td:nth-child(2) .bi {
+  color: #8E24AA;
 }
 
-/* Estilo para células com ícone de produto */
-.table td:first-child .bi {
-  color: rgba(102, 126, 234, 0.8);
-}
-
-/* Cliente / User ID */
+/* CLIENTE (1312312354) - Vermelho vibrante */
 .table td:nth-child(3) {
-  color: rgba(139, 92, 246, 0.9);
+  color: #EF5350;
   font-family: 'Courier New', monospace;
   font-size: 0.875rem;
+  font-weight: 500;
 }
 
-/* Valor monetário com destaque */
+/* STATUS Badge - Verde como na imagem */
+.badge-delivered,
+.badge-entregue {
+  background: #C8E6C9 !important;
+  color: #2E7D32 !important;
+  border-color: #81C784 !important;
+}
+
+.badge-pending,
+.badge-pendente {
+  background: #FFF9C4 !important;
+  color: #F57C00 !important;
+  border-color: #FFD54F !important;
+}
+
+/* VALOR (R$ 14,00) - Verde dinheiro */
 .table td:nth-child(5) {
-  color: rgba(16, 185, 129, 0.95);
+  color: #4CAF50;
   font-weight: 600;
   font-size: 0.9375rem;
 }
 
-/* Data/Hora com melhor contraste */
-.table td:nth-child(6) {
-  color: rgba(255, 255, 255, 0.75);
-  font-size: 0.8125rem;
-  white-space: nowrap;
+.table td:nth-child(5) .bi {
+  color: #4CAF50;
 }
 
+/* DATA (25/11/2025) - Cinza médio */
+.table td:nth-child(6) {
+  color: #9E9E9E;
+  font-size: 0.875rem;
+  white-space: nowrap;
+  font-weight: 500;
+}
+
+/* HORA (04:20) - Cinza claro */
+.table td:nth-child(6) small,
+.table td:nth-child(6) .time {
+  color: #BDBDBD;
+  font-size: 0.8125rem;
+}
+
+/* Ícones de calendário e relógio */
 .table td:nth-child(6) .bi-calendar {
-  color: rgba(148, 163, 184, 0.6);
+  color: #9E9E9E;
   margin-right: 4px;
 }
 
 .table td:nth-child(6) .bi-clock {
-  color: rgba(148, 163, 184, 0.6);
+  color: #BDBDBD;
   margin-right: 4px;
+}
+
+/* Ícones na tabela - tamanho geral */
+.table td .bi {
+  font-size: 1.125rem;
+  vertical-align: middle;
 }
 
 /* Responsive Table */
@@ -504,34 +532,39 @@ body::before {
   transition: all var(--transition-fast);
 }
 
-.badge-pending {
-  background: rgba(245, 158, 11, 0.1);
-  color: var(--status-pending);
-  border-color: rgba(245, 158, 11, 0.2);
+.badge-pending,
+.badge-pendente {
+  background: #FFF9C4 !important;
+  color: #F57C00 !important;
+  border-color: #FFD54F !important;
 }
 
-.badge-paid {
-  background: rgba(59, 130, 246, 0.1);
-  color: var(--status-paid);
-  border-color: rgba(59, 130, 246, 0.2);
+.badge-paid,
+.badge-pago {
+  background: #BBDEFB !important;
+  color: #1976D2 !important;
+  border-color: #64B5F6 !important;
 }
 
-.badge-delivered {
-  background: rgba(16, 185, 129, 0.1);
-  color: var(--status-delivered);
-  border-color: rgba(16, 185, 129, 0.2);
+.badge-delivered,
+.badge-entregue {
+  background: #C8E6C9 !important;
+  color: #2E7D32 !important;
+  border-color: #81C784 !important;
 }
 
-.badge-completed {
-  background: rgba(139, 92, 246, 0.1);
-  color: var(--status-completed);
-  border-color: rgba(139, 92, 246, 0.2);
+.badge-completed,
+.badge-completado {
+  background: #E1BEE7 !important;
+  color: #6A1B9A !important;
+  border-color: #BA68C8 !important;
 }
 
-.badge-cancelled {
-  background: rgba(239, 68, 68, 0.1);
-  color: var(--status-cancelled);
-  border-color: rgba(239, 68, 68, 0.2);
+.badge-cancelled,
+.badge-cancelado {
+  background: #FFCDD2 !important;
+  color: #C62828 !important;
+  border-color: #EF5350 !important;
 }
 
 .badge:hover {

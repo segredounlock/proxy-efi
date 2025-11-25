@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Teste - Cores Exatas da Tabela</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #0a0e1a 0%, #1e293b 100%);
+      min-height: 100vh;
+      padding: 2rem;
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .header {
+      background: rgba(15, 23, 42, 0.8);
+      border: 1px solid rgba(148, 163, 184, 0.1);
+      border-radius: 16px;
+      padding: 2rem;
+      margin-bottom: 2rem;
+      backdrop-filter: blur(10px);
+    }
+
+    .header h1 {
+      color: #10b981;
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .header p {
+      color: #94a3b8;
+      font-size: 1rem;
+    }
+
+    .table-section {
+      background: rgba(15, 23, 42, 0.7);
+      border: 1px solid rgba(148, 163, 184, 0.1);
+      border-radius: 16px;
+      padding: 2rem;
+      backdrop-filter: blur(10px);
+      margin-bottom: 2rem;
+    }
+
+    .table-wrapper {
+      background: rgba(255, 255, 255, 0.03);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    thead {
+      background: rgba(148, 163, 184, 0.05);
+      border-bottom: 2px solid rgba(148, 163, 184, 0.1);
+    }
+
+    th {
+      padding: 1rem 1.5rem;
+      text-align: left;
+      font-weight: 700;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: #94a3b8;
+    }
+
+    tbody tr {
+      border-bottom: 1px solid rgba(148, 163, 184, 0.08);
+      transition: all 0.2s ease;
+    }
+
+    tbody tr:hover {
+      background: rgba(102, 126, 234, 0.05);
+    }
+
+    td {
+      padding: 1rem 1.5rem;
+      font-weight: 500;
+    }
+
+    /* ID - Azul suave */
+    td:nth-child(1) {
+      color: #A0B8E6;
+      font-weight: 600;
+    }
+
+    /* PRODUTO - Roxo/Violeta EXATO */
+    td:nth-child(2) {
+      color: #8E24AA;
+      font-weight: 600;
+    }
+
+    td:nth-child(2) .bi {
+      color: #8E24AA;
+    }
+
+    /* CLIENTE - Vermelho vibrante EXATO */
+    td:nth-child(3) {
+      color: #EF5350;
+      font-family: 'Courier New', monospace;
+      font-size: 0.875rem;
+      font-weight: 500;
+    }
+
+    /* STATUS BADGES - Cores EXATAS */
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+      padding: 0.375rem 0.75rem;
+      border-radius: 0.5rem;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      border: 1px solid;
+    }
+
+    .badge-entregue {
+      background: #C8E6C9 !important;
+      color: #2E7D32 !important;
+      border-color: #81C784 !important;
+    }
+
+    .badge-pendente {
+      background: #FFF9C4 !important;
+      color: #F57C00 !important;
+      border-color: #FFD54F !important;
+    }
+
+    /* VALOR - Verde dinheiro EXATO */
+    td:nth-child(5) {
+      color: #4CAF50;
+      font-weight: 600;
+      font-size: 0.9375rem;
+    }
+
+    td:nth-child(5) .bi {
+      color: #4CAF50;
+    }
+
+    /* DATA/HORA - Cinzas EXATOS */
+    td:nth-child(6) {
+      color: #9E9E9E;
+      font-size: 0.875rem;
+      white-space: nowrap;
+      font-weight: 500;
+    }
+
+    td:nth-child(6) .time {
+      color: #BDBDBD;
+      font-size: 0.8125rem;
+    }
+
+    td:nth-child(6) .bi-calendar {
+      color: #9E9E9E;
+      margin-right: 4px;
+    }
+
+    td:nth-child(6) .bi-clock {
+      color: #BDBDBD;
+      margin-right: 4px;
+    }
+
+    .bi {
+      font-size: 1.125rem;
+      vertical-align: middle;
+    }
+
+    .color-palette {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+
+    .color-card {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(148, 163, 184, 0.1);
+      border-radius: 12px;
+      padding: 1.5rem;
+      text-align: center;
+    }
+
+    .color-swatch {
+      width: 100%;
+      height: 60px;
+      border-radius: 8px;
+      margin-bottom: 0.75rem;
+      border: 2px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .color-name {
+      color: #f1f5f9;
+      font-weight: 600;
+      font-size: 0.875rem;
+      margin-bottom: 0.25rem;
+    }
+
+    .color-hex {
+      color: #94a3b8;
+      font-family: 'Courier New', monospace;
+      font-size: 0.75rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    
+    <div class="header">
+      <h1>
+        <i class="bi bi-palette-fill"></i>
+        Cores Exatas - Tabela de Pedidos
+      </h1>
+      <p>Cores extraídas diretamente da imagem fornecida e aplicadas com precisão</p>
+    </div>
+
+    <div class="table-section">
+      <h2 style="color: #f1f5f9; margin-bottom: 1.5rem; font-size: 1.25rem;">
+        <i class="bi bi-table"></i> Tabela com Cores Corretas
+      </h2>
+      
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>PRODUTO</th>
+              <th>CLIENTE</th>
+              <th>STATUS</th>
+              <th>VALOR</th>
+              <th>DATA/HORA</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>#1056</td>
+              <td><i class="bi bi-crown-fill"></i> VIVO - 44Gb 14$ <i class="bi bi-crown-fill"></i></td>
+              <td>1312312354</td>
+              <td><span class="badge badge-entregue">ENTREGUE</span></td>
+              <td><i class="bi bi-cash"></i> R$ 14,00</td>
+              <td>
+                <i class="bi bi-calendar"></i> 25/11/2025
+                <br>
+                <i class="bi bi-clock"></i> <span class="time">04:20</span>
+              </td>
+            </tr>
+            <tr>
+              <td>#1057</td>
+              <td><i class="bi bi-crown-fill"></i> VIVO - 44Gb 14$ <i class="bi bi-crown-fill"></i></td>
+              <td>6732485065</td>
+              <td><span class="badge badge-pendente">PENDENTE</span></td>
+              <td><i class="bi bi-cash"></i> R$ 14,00</td>
+              <td>
+                <i class="bi bi-calendar"></i> 25/11/2025
+                <br>
+                <i class="bi bi-clock"></i> <span class="time">03:49</span>
+              </td>
+            </tr>
+            <tr>
+              <td>#1058</td>
+              <td><i class="bi bi-crown-fill"></i> VIVO - 44Gb 14$ <i class="bi bi-crown-fill"></i></td>
+              <td>6732485065</td>
+              <td><span class="badge badge-entregue">ENTREGUE</span></td>
+              <td><i class="bi bi-cash"></i> R$ 14,00</td>
+              <td>
+                <i class="bi bi-calendar"></i> 25/11/2025
+                <br>
+                <i class="bi bi-clock"></i> <span class="time">03:45</span>
+              </td>
+            </tr>
+            <tr>
+              <td>#1059</td>
+              <td><i class="bi bi-crown-fill"></i> VIVO - 44Gb 14$ <i class="bi bi-crown-fill"></i></td>
+              <td>6262192368</td>
+              <td><span class="badge badge-pendente">PENDENTE</span></td>
+              <td><i class="bi bi-cash"></i> R$ 14,00</td>
+              <td>
+                <i class="bi bi-calendar"></i> 25/11/2025
+                <br>
+                <i class="bi bi-clock"></i> <span class="time">02:12</span>
+              </td>
+            </tr>
+            <tr>
+              <td>#1060</td>
+              <td><i class="bi bi-crown-fill"></i> VIVO - 44Gb 14$ <i class="bi bi-crown-fill"></i></td>
+              <td>8412976781</td>
+              <td><span class="badge badge-entregue">ENTREGUE</span></td>
+              <td><i class="bi bi-cash"></i> R$ 14,00</td>
+              <td>
+                <i class="bi bi-calendar"></i> 25/11/2025
+                <br>
+                <i class="bi bi-clock"></i> <span class="time">02:11</span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="table-section">
+      <h2 style="color: #f1f5f9; margin-bottom: 1.5rem; font-size: 1.25rem;">
+        <i class="bi bi-palette"></i> Paleta de Cores Exatas
+      </h2>
+      
+      <div class="color-palette">
+        <div class="color-card">
+          <div class="color-swatch" style="background: #A0B8E6;"></div>
+          <div class="color-name">ID</div>
+          <div class="color-hex">#A0B8E6</div>
+        </div>
+
+        <div class="color-card">
+          <div class="color-swatch" style="background: #8E24AA;"></div>
+          <div class="color-name">Produto / Coroas</div>
+          <div class="color-hex">#8E24AA</div>
+        </div>
+
+        <div class="color-card">
+          <div class="color-swatch" style="background: #EF5350;"></div>
+          <div class="color-name">Cliente</div>
+          <div class="color-hex">#EF5350</div>
+        </div>
+
+        <div class="color-card">
+          <div class="color-swatch" style="background: #C8E6C9; border: 2px solid #81C784;"></div>
+          <div class="color-name">Badge Entregue</div>
+          <div class="color-hex">#C8E6C9 / #2E7D32</div>
+        </div>
+
+        <div class="color-card">
+          <div class="color-swatch" style="background: #FFF9C4; border: 2px solid #FFD54F;"></div>
+          <div class="color-name">Badge Pendente</div>
+          <div class="color-hex">#FFF9C4 / #F57C00</div>
+        </div>
+
+        <div class="color-card">
+          <div class="color-swatch" style="background: #4CAF50;"></div>
+          <div class="color-name">Valor</div>
+          <div class="color-hex">#4CAF50</div>
+        </div>
+
+        <div class="color-card">
+          <div class="color-swatch" style="background: #9E9E9E;"></div>
+          <div class="color-name">Data</div>
+          <div class="color-hex">#9E9E9E</div>
+        </div>
+
+        <div class="color-card">
+          <div class="color-swatch" style="background: #BDBDBD;"></div>
+          <div class="color-name">Hora</div>
+          <div class="color-hex">#BDBDBD</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    // Animar entrada
+    document.addEventListener('DOMContentLoaded', function() {
+      const rows = document.querySelectorAll('tbody tr');
+      rows.forEach((row, index) => {
+        setTimeout(() => {
+          row.style.opacity = '0';
+          row.style.transform = 'translateX(-20px)';
+          row.style.transition = 'all 0.4s ease';
+          
+          requestAnimationFrame(() => {
+            row.style.opacity = '1';
+            row.style.transform = 'translateX(0)';
+          });
+        }, index * 100);
+      });
+    });
+  </script>
+</body>
+</html>
