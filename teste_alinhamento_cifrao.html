@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Teste de Alinhamento do Cifrão R$</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+    }
+
+    .container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      max-width: 1200px;
+      width: 100%;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      padding: 2rem;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+    }
+
+    .card-title {
+      font-size: 0.875rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    /* MÉTODO ANTIGO (ERRADO) */
+    .kpi-value-old {
+      font-size: 2.5rem;
+      font-weight: 800;
+      line-height: 1;
+      margin-bottom: 0.5rem;
+      background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* MÉTODO NOVO (CORRETO) */
+    .kpi-value-new {
+      font-size: 2.5rem;
+      font-weight: 800;
+      line-height: 1.2;
+      margin-bottom: 0.5rem;
+      background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+      white-space: nowrap;
+    }
+
+    .kpi-trend {
+      color: #10b981;
+      font-size: 0.875rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .status-badge {
+      display: inline-block;
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 0.875rem;
+      margin-top: 1rem;
+    }
+
+    .status-error {
+      background: rgba(239, 68, 68, 0.1);
+      color: #ef4444;
+      border: 1px solid rgba(239, 68, 68, 0.2);
+    }
+
+    .status-success {
+      background: rgba(16, 185, 129, 0.1);
+      color: #10b981;
+      border: 1px solid rgba(16, 185, 129, 0.2);
+    }
+
+    .comparison {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-top: 2rem;
+    }
+
+    .comparison-title {
+      color: rgba(255, 255, 255, 0.9);
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .comparison-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    .comparison-item {
+      background: rgba(255, 255, 255, 0.03);
+      padding: 1rem;
+      border-radius: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .comparison-label {
+      color: rgba(255, 255, 255, 0.6);
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 0.5rem;
+    }
+
+    .comparison-value {
+      color: rgba(255, 255, 255, 0.9);
+      font-size: 1rem;
+      font-weight: 600;
+    }
+
+    .highlight {
+      color: #10b981;
+    }
+
+    .icon-before { background: rgba(239, 68, 68, 0.1); color: #ef4444; }
+    .icon-after { background: rgba(16, 185, 129, 0.1); color: #10b981; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    
+    <!-- ANTES (Errado) -->
+    <div class="card">
+      <div class="card-header">
+        <div class="icon icon-before">❌</div>
+        <div>
+          <div class="card-title">Antes (Desalinhado)</div>
+        </div>
+      </div>
+      
+      <div style="color: rgba(255, 255, 255, 0.7); font-size: 0.875rem; margin-bottom: 1rem;">
+        RECEITA TOTAL
+      </div>
+      
+      <div class="kpi-value-old">R$ 11.790,00</div>
+      
+      <div class="kpi-trend">
+        ↑ +15.2% vs mês anterior
+      </div>
+
+      <div class="status-badge status-error">
+        ❌ Cifrão desalinhado
+      </div>
+
+      <div style="margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid rgba(255, 255, 255, 0.1);">
+        <div style="color: rgba(255, 255, 255, 0.5); font-size: 0.75rem; margin-bottom: 0.5rem;">
+          CSS Problemático:
+        </div>
+        <pre style="color: #ef4444; font-size: 0.75rem; background: rgba(0,0,0,0.2); padding: 0.75rem; border-radius: 6px; overflow-x: auto;">line-height: 1;
+/* Sem display: flex */</pre>
+      </div>
+    </div>
+
+    <!-- DEPOIS (Correto) -->
+    <div class="card">
+      <div class="card-header">
+        <div class="icon icon-after">✅</div>
+        <div>
+          <div class="card-title">Depois (Alinhado)</div>
+        </div>
+      </div>
+      
+      <div style="color: rgba(255, 255, 255, 0.7); font-size: 0.875rem; margin-bottom: 1rem;">
+        RECEITA TOTAL
+      </div>
+      
+      <div class="kpi-value-new">R$ 11.790,00</div>
+      
+      <div class="kpi-trend">
+        ↑ +15.2% vs mês anterior
+      </div>
+
+      <div class="status-badge status-success">
+        ✅ Perfeitamente alinhado
+      </div>
+
+      <div style="margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid rgba(255, 255, 255, 0.1);">
+        <div style="color: rgba(255, 255, 255, 0.5); font-size: 0.75rem; margin-bottom: 0.5rem;">
+          CSS Corrigido:
+        </div>
+        <pre style="color: #10b981; font-size: 0.75rem; background: rgba(0,0,0,0.2); padding: 0.75rem; border-radius: 6px; overflow-x: auto;">line-height: 1.2;
+display: inline-flex;
+align-items: center;
+gap: 0.25rem;</pre>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Comparison Table -->
+  <div class="comparison">
+    <div class="comparison-title">
+      📊 Comparação Técnica
+    </div>
+    
+    <div class="comparison-grid">
+      <div class="comparison-item">
+        <div class="comparison-label">Line Height</div>
+        <div class="comparison-value">
+          <span style="color: #ef4444;">1.0</span> → <span class="highlight">1.2</span>
+        </div>
+      </div>
+
+      <div class="comparison-item">
+        <div class="comparison-label">Display</div>
+        <div class="comparison-value">
+          <span style="color: #ef4444;">block</span> → <span class="highlight">inline-flex</span>
+        </div>
+      </div>
+
+      <div class="comparison-item">
+        <div class="comparison-label">Align Items</div>
+        <div class="comparison-value">
+          <span style="color: #ef4444;">-</span> → <span class="highlight">center</span>
+        </div>
+      </div>
+
+      <div class="comparison-item">
+        <div class="comparison-label">Gap</div>
+        <div class="comparison-value">
+          <span style="color: #ef4444;">-</span> → <span class="highlight">0.25rem</span>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top: 1.5rem; padding: 1rem; background: rgba(16, 185, 129, 0.05); border: 1px solid rgba(16, 185, 129, 0.2); border-radius: 8px;">
+      <div style="color: #10b981; font-weight: 600; margin-bottom: 0.5rem;">
+        ✅ Resultado:
+      </div>
+      <div style="color: rgba(255, 255, 255, 0.7); font-size: 0.875rem;">
+        O cifrão "R$" e o valor ficam <span class="highlight">sempre alinhados horizontalmente</span> em qualquer navegador ou tamanho de tela.
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Animar os valores ao carregar
+    document.addEventListener('DOMContentLoaded', function() {
+      const values = document.querySelectorAll('.kpi-value-old, .kpi-value-new');
+      values.forEach((el, index) => {
+        setTimeout(() => {
+          el.style.opacity = '0';
+          el.style.transform = 'translateY(10px)';
+          el.style.transition = 'all 0.5s ease';
+          
+          requestAnimationFrame(() => {
+            el.style.opacity = '1';
+            el.style.transform = 'translateY(0)';
+          });
+        }, index * 200);
+      });
+    });
+  </script>
+</body>
+</html>
