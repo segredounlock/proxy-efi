@@ -1,18 +1,4 @@
 <?php
-// NOTA: ARQUIVO ESTÁ NO REPOSITÓRIO EM /home/user/webapp/
-// COPIE ESTE ARQUIVO + referral_system.php + broadcast_system.php PARA SEU SERVIDOR
-
-// Este é o arquivo api_telegram.php modificado com sistema de indicações integrado
-// 
-// MODIFICAÇÕES FEITAS:
-// 1. Linha ~88: Adicionado require_once dos módulos
-// 2. Linha ~1900: Adicionado detecção de código no /start
-// 3. Linha ~1905: Adicionado comandos /indicar e /meusaldo
-// 4. Linha ~332: Adicionado complete_referral após primeira compra
-//
-// SUBSTITUA seu api_telegram.php atual por este arquivo
-// E COPIE também: referral_system.php e broadcast_system.php
-<?php
 /**
  * SEGREDO A12+ Activation Lock Bypass Bot
  * VERSÃO FINAL COMPLETA - COM TODAS MELHORIAS
@@ -85,11 +71,6 @@ define('BROADCAST_LOCK_FILE', DATA_DIR . '/broadcast.lock');
 // Arquivos de logs
 define('LOG_DEBUG', LOGS_DIR . '/debug.log');
 define('LOG_UPDATES', LOGS_DIR . '/updates.log');
-
-// ==================== INCLUIR MÓDULOS ====================
-require_once __DIR__ . '/referral_system.php';
-require_once __DIR__ . '/broadcast_system.php';
-
 define('LOG_HANDLER', LOGS_DIR . '/handler_trace.log');
 define('LOG_MESSAGES', LOGS_DIR . '/send_message_resp.log');
 define('LOG_PIN', LOGS_DIR . '/pin_attempts.log');
@@ -104,6 +85,11 @@ define('BROADCAST_LOCK_TIMEOUT', 600); // 10 minutos
 foreach ([DATA_DIR, LOGS_DIR, BACKUP_DIR] as $dir) {
     if (!file_exists($dir)) @mkdir($dir, 0755, true);
 }
+
+// ==================== INCLUIR MÓDULOS ====================
+require_once __DIR__ . '/referral_system.php';
+require_once __DIR__ . '/broadcast_system.php';
+
 
 // ==================== UTILITIES ====================
 function db_read($file, $default = []) {
@@ -344,6 +330,10 @@ function charge_credits($chat_id, $amount, $type, $meta = []) {
     $users[$id]['total_spent'] = round($users[$id]['total_spent'] + floatval($amount), 2);
     if ($type === 'order_success') {
         $users[$id]['total_orders']++;
+        // Completar indicação na primeira compra
+        if ($users[$id]['total_orders'] == 1) {
+            complete_referral($chat_id);
+        }
     }
 
     db_write(USERS_FILE, $users);
@@ -1919,19 +1909,19 @@ if ($chat_id) {
     switch ($cmd) {
         case '/start':
         case '/help':
+            cmd_start($chat_id, $name);
             // Detectar código de indicação
             if (isset($arg1) && strpos($arg1, 'REF') === 0) {
                 handle_referral_start($chat_id, $arg1);
             }
-            cmd_start($chat_id, $name);
             break;
+        case '/balance':
         case '/indicar':
             cmd_indicar($chat_id);
             break;
         case '/meusaldo':
             cmd_meusaldo($chat_id);
             break;
-        case '/balance':
             cmd_balance($chat_id);
             break;
         case '/buy':
