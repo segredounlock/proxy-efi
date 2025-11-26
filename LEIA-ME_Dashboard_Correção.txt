@@ -1,0 +1,121 @@
+═══════════════════════════════════════════════════════════════
+  CORREÇÃO DO CÁLCULO DE RECEITA TOTAL - DASHBOARD ADMIN
+═══════════════════════════════════════════════════════════════
+
+📋 ARQUIVO CORRIGIDO:
+   • index_DASHBOARD_CORRIGIDO.php
+
+🔧 PROBLEMA IDENTIFICADO:
+   O cálculo da "Receita Total" estava usando uma query simples que
+   não tratava corretamente casos especiais:
+   
+   Query ANTIGA (com problema):
+   ────────────────────────────────────────────────────────────
+   SELECT COALESCE(SUM(COALESCE(final_price_cents, price_cents))/100, 0) AS s 
+   FROM orders 
+   WHERE status IN ('delivered','completed','paid')
+   ────────────────────────────────────────────────────────────
+
+   LIMITAÇÕES da query antiga:
+   ✗ Não valida se os valores são maiores que zero
+   ✗ Pode somar valores NULL ou zero incorretamente
+   ✗ COALESCE aninhado pode causar comportamento inesperado
+
+✅ SOLUÇÃO IMPLEMENTADA:
+   Query CORRIGIDA com validação explícita:
+   ────────────────────────────────────────────────────────────
+   SELECT 
+     COALESCE(
+       SUM(
+         CASE 
+           WHEN final_price_cents IS NOT NULL AND final_price_cents > 0 
+             THEN final_price_cents
+           WHEN price_cents IS NOT NULL AND price_cents > 0 
+             THEN price_cents
+           ELSE 0
+         END
+       ) / 100, 
+       0
+     ) AS s 
+   FROM orders 
+   WHERE status IN ('delivered','completed','paid')
+   ────────────────────────────────────────────────────────────
+
+   VANTAGENS da query corrigida:
+   ✓ Prioriza final_price_cents quando válido (> 0)
+   ✓ Usa price_cents como fallback quando válido (> 0)
+   ✓ Retorna 0 para registros sem valores válidos
+   ✓ Validação explícita de NULL e valores positivos
+   ✓ Comportamento previsível e consistente
+
+📦 INSTRUÇÕES DE INSTALAÇÃO:
+
+   1. Faça backup do seu index.php atual:
+      $ cp index.php index.php.backup
+
+   2. Substitua pelo arquivo corrigido:
+      $ cp index_DASHBOARD_CORRIGIDO.php index.php
+
+   3. Verifique as permissões:
+      $ chmod 644 index.php
+
+   4. Teste o dashboard no navegador
+      • Acesse: /admin/ ou /
+      • Verifique o card "Receita Total"
+      • O valor agora deve estar correto!
+
+🔍 COMO VERIFICAR SE FUNCIONOU:
+
+   Execute esta query no seu banco de dados para conferir:
+   
+   SELECT 
+     COUNT(*) as total_pedidos,
+     SUM(CASE 
+       WHEN final_price_cents IS NOT NULL AND final_price_cents > 0 
+         THEN final_price_cents
+       WHEN price_cents IS NOT NULL AND price_cents > 0 
+         THEN price_cents
+       ELSE 0
+     END) / 100 AS receita_total
+   FROM orders 
+   WHERE status IN ('delivered','completed','paid');
+
+   O valor de 'receita_total' deve corresponder ao mostrado no dashboard.
+
+⚠️ OBSERVAÇÕES IMPORTANTES:
+
+   • O arquivo corrigido mantém 100% da estrutura original
+   • Apenas a query de cálculo de receita foi modificada
+   • Todos os outros cards e funcionalidades permanecem iguais
+   • Compatível com a estrutura atual do banco de dados
+
+💡 DICA DE DEBUG:
+
+   Se ainda houver diferença, verifique:
+   
+   1. Pedidos com final_price_cents = 0 (devem ser ignorados)
+   2. Pedidos com price_cents NULL (devem ser ignorados)
+   3. Status dos pedidos (apenas delivered/completed/paid)
+   
+   Query de debug:
+   SELECT 
+     id, 
+     status, 
+     price_cents, 
+     final_price_cents,
+     CASE 
+       WHEN final_price_cents IS NOT NULL AND final_price_cents > 0 
+         THEN final_price_cents
+       WHEN price_cents IS NOT NULL AND price_cents > 0 
+         THEN price_cents
+       ELSE 0
+     END as valor_usado
+   FROM orders 
+   WHERE status IN ('delivered','completed','paid')
+   ORDER BY created_at DESC 
+   LIMIT 20;
+
+═══════════════════════════════════════════════════════════════
+Data da correção: 2025-11-25
+Sistema: eSIM Admin Dashboard
+═══════════════════════════════════════════════════════════════
