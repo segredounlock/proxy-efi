@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <UseWindowsForms>true</UseWindowsForms>
+    <ApplicationIcon>Resources\icon.ico</ApplicationIcon>
+    <AssemblyName>SegredoActivator</AssemblyName>
+    <RootNamespace>SegredoActivator</RootNamespace>
+    <AssemblyVersion>2.0.0.0</AssemblyVersion>
+    <FileVersion>2.0.0.0</FileVersion>
+    <Company>BlackGSM Server</Company>
+    <Product>Segredo Activator A12+ Tool</Product>
+    <Description>Modern Device Activation Tool with Enhanced UI</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.Drawing.Common" Version="8.0.0" />
+  </ItemGroup>
+
+</Project>
