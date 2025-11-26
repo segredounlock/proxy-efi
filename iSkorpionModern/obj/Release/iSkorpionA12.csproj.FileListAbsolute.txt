@@ -1,0 +1,82 @@
+C:\iSkorpionA12\iSkorpionA12Win\iSkorpionA12\bin\Release\iSkorpionA12.exe.config
+C:\iSkorpionA12\iSkorpionA12Win\iSkorpionA12\bin\Release\iSkorpionA12.exe
+C:\iSkorpionA12\iSkorpionA12Win\iSkorpionA12\bin\Release\iSkorpionA12.pdb
+C:\iSkorpionA12\iSkorpionA12Win\iSkorpionA12\obj\Release\iSkorpionA12.csproj.AssemblyReference.cache
+C:\iSkorpionA12\iSkorpionA12Win\iSkorpionA12\obj\Release\iSkorpionA12.CustomMessageBox.resources
+C:\iSkorpionA12\iSkorpionA12Win\iSkorpionA12\obj\Release\iSkorpionA12.Form1.resources
+C:\iSkorpionA12\iSkorpionA12Win\iSkorpionA12\obj\Release\iSkorpionA12.Properties.Resources.resources
+C:\iSkorpionA12\iSkorpionA12Win\iSkorpionA12\obj\Release\iSkorpionA12.csproj.GenerateResource.cache
+C:\iSkorpionA12\iSkorpionA12Win\iSkorpionA12\obj\Release\iSkorpionA12.csproj.CoreCompileInputs.cache
+C:\iSkorpionA12\iSkorpionA12Win\iSkorpionA12\obj\Release\iSkorpionA12.exe
+C:\iSkorpionA12\iSkorpionA12Win\iSkorpionA12\obj\Release\iSkorpionA12.pdb
+C:\iSkorpionA12\iSkorpionA12Win\iSkorpionA12\bin\Release\Guna.UI2.dll
+C:\iSkorpionA12\iSkorpionA12Win\iSkorpionA12\bin\Release\iMobileDevice-net.dll
+C:\iSkorpionA12\iSkorpionA12Win\iSkorpionA12\bin\Release\iMobileDevice-net.pdb
+C:\iSkorpionA12\iSkorpionA12Win\iSkorpionA12\bin\Release\LibUsbDotNet.LibUsbDotNet.dll
+C:\iSkorpionA12\iSkorpionA12Win\iSkorpionA12\bin\Release\LibUsbDotNet.LibUsbDotNet.pdb
+C:\iSkorpionA12\iSkorpionA12Win\iSkorpionA12\bin\Release\Newtonsoft.Json.dll
+C:\iSkorpionA12\iSkorpionA12Win\iSkorpionA12\bin\Release\plist-cil.dll
+C:\iSkorpionA12\iSkorpionA12Win\iSkorpionA12\bin\Release\plist-cil.pdb
+C:\iSkorpionA12\iSkorpionA12Win\iSkorpionA12\bin\Release\System.Buffers.dll
+C:\iSkorpionA12\iSkorpionA12Win\iSkorpionA12\bin\Release\System.Diagnostics.DiagnosticSource.dll
+C:\iSkorpionA12\iSkorpionA12Win\iSkorpionA12\bin\Release\System.Memory.dll
+C:\iSkorpionA12\iSkorpionA12Win\iSkorpionA12\bin\Release\System.Numerics.Vectors.dll
+C:\iSkorpionA12\iSkorpionA12Win\iSkorpionA12\bin\Release\System.Runtime.CompilerServices.Unsafe.dll
+C:\iSkorpionA12\iSkorpionA12Win\iSkorpionA12\bin\Release\System.Threading.Tasks.Extensions.dll
+C:\iSkorpionA12\iSkorpionA12Win\iSkorpionA12\bin\Release\System.ValueTuple.dll
+C:\iSkorpionA12\iSkorpionA12Win\iSkorpionA12\obj\Release\iSkorpio.7E244655.Up2Date
+C:\iSkorpionA12\iSkorpionA12Win\iSkorpionA12\obj\Release\iSkorpionA12.exe.config
+F:\PROJETOS\ISKORPION A12\iSkorpionA12Win.v1.7\iSkorpionA12\bin\Release\iSkorpionA12.exe.config
+F:\PROJETOS\ISKORPION A12\iSkorpionA12Win.v1.7\iSkorpionA12\bin\Release\iSkorpionA12.exe
+F:\PROJETOS\ISKORPION A12\iSkorpionA12Win.v1.7\iSkorpionA12\bin\Release\iSkorpionA12.pdb
+F:\PROJETOS\ISKORPION A12\iSkorpionA12Win.v1.7\iSkorpionA12\bin\Release\Guna.UI2.dll
+F:\PROJETOS\ISKORPION A12\iSkorpionA12Win.v1.7\iSkorpionA12\bin\Release\iMobileDevice-net.dll
+F:\PROJETOS\ISKORPION A12\iSkorpionA12Win.v1.7\iSkorpionA12\bin\Release\iMobileDevice-net.pdb
+F:\PROJETOS\ISKORPION A12\iSkorpionA12Win.v1.7\iSkorpionA12\bin\Release\LibUsbDotNet.LibUsbDotNet.dll
+F:\PROJETOS\ISKORPION A12\iSkorpionA12Win.v1.7\iSkorpionA12\bin\Release\LibUsbDotNet.LibUsbDotNet.pdb
+F:\PROJETOS\ISKORPION A12\iSkorpionA12Win.v1.7\iSkorpionA12\bin\Release\Newtonsoft.Json.dll
+F:\PROJETOS\ISKORPION A12\iSkorpionA12Win.v1.7\iSkorpionA12\bin\Release\plist-cil.dll
+F:\PROJETOS\ISKORPION A12\iSkorpionA12Win.v1.7\iSkorpionA12\bin\Release\plist-cil.pdb
+F:\PROJETOS\ISKORPION A12\iSkorpionA12Win.v1.7\iSkorpionA12\bin\Release\System.Buffers.dll
+F:\PROJETOS\ISKORPION A12\iSkorpionA12Win.v1.7\iSkorpionA12\bin\Release\System.Diagnostics.DiagnosticSource.dll
+F:\PROJETOS\ISKORPION A12\iSkorpionA12Win.v1.7\iSkorpionA12\bin\Release\System.Memory.dll
+F:\PROJETOS\ISKORPION A12\iSkorpionA12Win.v1.7\iSkorpionA12\bin\Release\System.Numerics.Vectors.dll
+F:\PROJETOS\ISKORPION A12\iSkorpionA12Win.v1.7\iSkorpionA12\bin\Release\System.Runtime.CompilerServices.Unsafe.dll
+F:\PROJETOS\ISKORPION A12\iSkorpionA12Win.v1.7\iSkorpionA12\bin\Release\System.Threading.Tasks.Extensions.dll
+F:\PROJETOS\ISKORPION A12\iSkorpionA12Win.v1.7\iSkorpionA12\bin\Release\System.ValueTuple.dll
+F:\PROJETOS\ISKORPION A12\iSkorpionA12Win.v1.7\iSkorpionA12\obj\Release\iSkorpionA12.csproj.AssemblyReference.cache
+F:\PROJETOS\ISKORPION A12\iSkorpionA12Win.v1.7\iSkorpionA12\obj\Release\iSkorpionA12.CustomMessageBox.resources
+F:\PROJETOS\ISKORPION A12\iSkorpionA12Win.v1.7\iSkorpionA12\obj\Release\iSkorpionA12.Form1.resources
+F:\PROJETOS\ISKORPION A12\iSkorpionA12Win.v1.7\iSkorpionA12\obj\Release\iSkorpionA12.Properties.Resources.resources
+F:\PROJETOS\ISKORPION A12\iSkorpionA12Win.v1.7\iSkorpionA12\obj\Release\iSkorpionA12.csproj.GenerateResource.cache
+F:\PROJETOS\ISKORPION A12\iSkorpionA12Win.v1.7\iSkorpionA12\obj\Release\iSkorpionA12.csproj.CoreCompileInputs.cache
+F:\PROJETOS\ISKORPION A12\iSkorpionA12Win.v1.7\iSkorpionA12\obj\Release\iSkorpio.7E244655.Up2Date
+F:\PROJETOS\ISKORPION A12\iSkorpionA12Win.v1.7\iSkorpionA12\obj\Release\iSkorpionA12.exe
+F:\PROJETOS\ISKORPION A12\iSkorpionA12Win.v1.7\iSkorpionA12\obj\Release\iSkorpionA12.pdb
+F:\PROJETOS a12\ISKORPION A12\iSkorpionA12Win.v1.7\iSkorpionA12\bin\Release\iSkorpionA12.exe.config
+F:\PROJETOS a12\ISKORPION A12\iSkorpionA12Win.v1.7\iSkorpionA12\bin\Release\iSkorpionA12.exe
+F:\PROJETOS a12\ISKORPION A12\iSkorpionA12Win.v1.7\iSkorpionA12\bin\Release\iSkorpionA12.pdb
+F:\PROJETOS a12\ISKORPION A12\iSkorpionA12Win.v1.7\iSkorpionA12\bin\Release\Guna.UI2.dll
+F:\PROJETOS a12\ISKORPION A12\iSkorpionA12Win.v1.7\iSkorpionA12\bin\Release\iMobileDevice-net.dll
+F:\PROJETOS a12\ISKORPION A12\iSkorpionA12Win.v1.7\iSkorpionA12\bin\Release\iMobileDevice-net.pdb
+F:\PROJETOS a12\ISKORPION A12\iSkorpionA12Win.v1.7\iSkorpionA12\bin\Release\LibUsbDotNet.LibUsbDotNet.dll
+F:\PROJETOS a12\ISKORPION A12\iSkorpionA12Win.v1.7\iSkorpionA12\bin\Release\LibUsbDotNet.LibUsbDotNet.pdb
+F:\PROJETOS a12\ISKORPION A12\iSkorpionA12Win.v1.7\iSkorpionA12\bin\Release\Newtonsoft.Json.dll
+F:\PROJETOS a12\ISKORPION A12\iSkorpionA12Win.v1.7\iSkorpionA12\bin\Release\plist-cil.dll
+F:\PROJETOS a12\ISKORPION A12\iSkorpionA12Win.v1.7\iSkorpionA12\bin\Release\plist-cil.pdb
+F:\PROJETOS a12\ISKORPION A12\iSkorpionA12Win.v1.7\iSkorpionA12\bin\Release\System.Buffers.dll
+F:\PROJETOS a12\ISKORPION A12\iSkorpionA12Win.v1.7\iSkorpionA12\bin\Release\System.Diagnostics.DiagnosticSource.dll
+F:\PROJETOS a12\ISKORPION A12\iSkorpionA12Win.v1.7\iSkorpionA12\bin\Release\System.Memory.dll
+F:\PROJETOS a12\ISKORPION A12\iSkorpionA12Win.v1.7\iSkorpionA12\bin\Release\System.Numerics.Vectors.dll
+F:\PROJETOS a12\ISKORPION A12\iSkorpionA12Win.v1.7\iSkorpionA12\bin\Release\System.Runtime.CompilerServices.Unsafe.dll
+F:\PROJETOS a12\ISKORPION A12\iSkorpionA12Win.v1.7\iSkorpionA12\bin\Release\System.Threading.Tasks.Extensions.dll
+F:\PROJETOS a12\ISKORPION A12\iSkorpionA12Win.v1.7\iSkorpionA12\bin\Release\System.ValueTuple.dll
+F:\PROJETOS a12\ISKORPION A12\iSkorpionA12Win.v1.7\iSkorpionA12\obj\Release\iSkorpionA12.csproj.AssemblyReference.cache
+F:\PROJETOS a12\ISKORPION A12\iSkorpionA12Win.v1.7\iSkorpionA12\obj\Release\iSkorpionA12.CustomMessageBox.resources
+F:\PROJETOS a12\ISKORPION A12\iSkorpionA12Win.v1.7\iSkorpionA12\obj\Release\iSkorpionA12.Form1.resources
+F:\PROJETOS a12\ISKORPION A12\iSkorpionA12Win.v1.7\iSkorpionA12\obj\Release\iSkorpionA12.Properties.Resources.resources
+F:\PROJETOS a12\ISKORPION A12\iSkorpionA12Win.v1.7\iSkorpionA12\obj\Release\iSkorpionA12.csproj.GenerateResource.cache
+F:\PROJETOS a12\ISKORPION A12\iSkorpionA12Win.v1.7\iSkorpionA12\obj\Release\iSkorpionA12.csproj.CoreCompileInputs.cache
+F:\PROJETOS a12\ISKORPION A12\iSkorpionA12Win.v1.7\iSkorpionA12\obj\Release\iSkorpio.7E244655.Up2Date
+F:\PROJETOS a12\ISKORPION A12\iSkorpionA12Win.v1.7\iSkorpionA12\obj\Release\iSkorpionA12.exe
+F:\PROJETOS a12\ISKORPION A12\iSkorpionA12Win.v1.7\iSkorpionA12\obj\Release\iSkorpionA12.pdb
