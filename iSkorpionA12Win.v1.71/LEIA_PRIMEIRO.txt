@@ -1,0 +1,152 @@
+═══════════════════════════════════════════════════════════════════
+  iSKORPION A12+ TOOL - VERSÃO 3.0 (LAYOUT HORIZONTAL)
+═══════════════════════════════════════════════════════════════════
+
+📦 CONTEÚDO DESTE ZIP:
+
+✅ Projeto completo com layout horizontal widescreen
+✅ Apenas 2 versões mantidas (ORIGINAL + ATUAL)
+✅ Documentação completa
+✅ Pronto para compilar no Visual Studio 2019+
+
+═══════════════════════════════════════════════════════════════════
+
+📂 ESTRUTURA:
+
+iSkorpionA12Win.v1.71/
+│
+├── iSkorpionA12.sln                    ← Abrir este arquivo no Visual Studio
+│
+└── iSkorpionA12/
+    ├── Form1.Designer.ORIGINAL.cs      ← Versão ORIGINAL (não modificar)
+    ├── Form1.Designer.cs               ← Versão ATUAL (layout horizontal) ✅
+    ├── Form1.cs                        ← Código lógico (inalterado)
+    ├── README_VERSOES.md               ← Explicação das versões
+    └── ... (outros arquivos do projeto)
+
+═══════════════════════════════════════════════════════════════════
+
+🎯 O QUE FOI MODIFICADO:
+
+Layout Transformado:
+✅ Janela: 851×480 → 1000×600 (widescreen 16:10)
+✅ Organização: Vertical → Horizontal
+✅ LogsBox: Coluna vertical → Painel horizontal (900×120)
+✅ Botões: Canto inferior → Centralizados gigantes (600px)
+✅ Informações: Coluna esquerda → Linha horizontal no topo
+✅ Cores: Azul claro → Cyberpunk neon (#00FFFF → #FF00FF)
+
+Código Funcional:
+✅ Form1.cs NÃO foi modificado
+✅ Funcionalidade permanece idêntica
+✅ Apenas o designer visual foi alterado
+
+═══════════════════════════════════════════════════════════════════
+
+🚀 COMO USAR:
+
+1. EXTRAIR O ZIP:
+   Descompactar em uma pasta de sua preferência
+
+2. ABRIR NO VISUAL STUDIO:
+   - Abrir Visual Studio 2019 ou superior
+   - File → Open → Project/Solution
+   - Selecionar: iSkorpionA12Win.v1.71/iSkorpionA12.sln
+   - Aguardar NuGet restaurar pacotes automaticamente
+
+3. COMPILAR:
+   - Menu: Build → Build Solution
+   - Ou pressionar: Ctrl + Shift + B
+   - Executável estará em: bin/Release/iSkorpionA12.exe
+
+═══════════════════════════════════════════════════════════════════
+
+📋 REQUISITOS:
+
+✅ Windows 7 SP1 ou superior
+✅ Visual Studio 2019 ou superior (Community/Professional/Enterprise)
+✅ .NET Framework 4.8 SDK
+✅ NuGet Package Manager habilitado
+
+═══════════════════════════════════════════════════════════════════
+
+📖 DOCUMENTAÇÃO INCLUÍDA:
+
+iSkorpionA12/README_VERSOES.md
+  → Explicação das versões dos arquivos
+
+iSkorpionA12/INSTRUCOES_COMPILACAO.md
+  → Guia completo de compilação
+
+iSkorpionA12/NOVO_LAYOUT_HORIZONTAL.md
+  → Detalhes técnicos do novo layout
+
+iSkorpionA12/RESUMO_TRANSFORMACAO.md
+  → Comparação antes/depois detalhada
+
+═══════════════════════════════════════════════════════════════════
+
+🔄 VERSÕES DOS ARQUIVOS:
+
+Form1.Designer.ORIGINAL.cs
+  → Versão original do projeto (intocada)
+  → Layout vertical, 851×480, cores claras
+
+Form1.Designer.cs
+  → Versão atual modificada (EM USO) ✅
+  → Layout horizontal, 1000×600, cores neon
+  → LogsBox horizontal, botões centralizados
+
+═══════════════════════════════════════════════════════════════════
+
+⚠️ IMPORTANTE:
+
+1. NÃO modificar Form1.Designer.ORIGINAL.cs
+   (É o backup da versão original)
+
+2. Trabalhar apenas em Form1.Designer.cs
+   (Versão atual em uso)
+
+3. Após compilar, testar a interface:
+   - Verificar se a janela está em 1000×600
+   - Verificar se as informações estão em linha horizontal
+   - Verificar se LogsBox está horizontal e largo
+   - Verificar se botões estão centralizados
+
+═══════════════════════════════════════════════════════════════════
+
+🎨 LAYOUT VISUAL:
+
+ANTES (Original):                 DEPOIS (Atual):
+┌──────────────────┐              ┌─────────────────────────────┐
+│ Model:     Logs  │              │ Model ProductType Serial... │
+│ Type:           │              │ N/A   N/A        N/A        │
+│ Serial:         │              │                             │
+│ iOS:            │              │ ┌─────────────────────────┐ │
+│                 │              │ │    LogsBox Horizontal   │ │
+│ [Activate]      │              │ └─────────────────────────┘ │
+│ [Block OTA]     │              │                             │
+│                 │              │   ┌───────────────────┐     │
+└──────────────────┘              │   │  [ACTIVATE BTN]   │     │
+                                  │   └───────────────────┘     │
+                                  │   ┌───────────────────┐     │
+                                  │   │ [BLOCK OTA BTN]   │     │
+                                  │   └───────────────────┘     │
+                                  └─────────────────────────────┘
+
+═══════════════════════════════════════════════════════════════════
+
+🔗 SUPORTE:
+
+Repositório GitHub:
+https://github.com/segredounlock/proxy-efi
+
+═══════════════════════════════════════════════════════════════════
+
+✅ STATUS: PRONTO PARA COMPILAR E USAR!
+
+Data: 2025-11-26
+Versão: 3.0 - Layout Horizontal Widescreen
+Organização: Limpa e direta (apenas ORIGINAL + ATUAL)
+
+═══════════════════════════════════════════════════════════════════
