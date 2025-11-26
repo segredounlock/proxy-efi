@@ -18,12 +18,12 @@ namespace SegredoA12Tool
             this.components = new System.ComponentModel.Container();
             
             // Colors - Dark Modern Theme
-            var colorBackground = System.Drawing.ColorTranslator.FromHtml("#2B2B2B");      // Dark gray
-            var colorPanel = System.Drawing.ColorTranslator.FromHtml("#3C3C3C");          // Medium dark
-            var colorAccent = System.Drawing.ColorTranslator.FromHtml("#00D9A3");         // Green accent (like image)
-            var colorText = System.Drawing.ColorTranslator.FromHtml("#FFFFFF");           // White text
-            var colorTextSecondary = System.Drawing.ColorTranslator.FromHtml("#B0B0B0");  // Gray text
-            var colorButtonHover = System.Drawing.ColorTranslator.FromHtml("#00F5B8");    // Lighter green
+            System.Drawing.Color colorBackground = System.Drawing.ColorTranslator.FromHtml("#2B2B2B");      // Dark gray
+            System.Drawing.Color colorPanel = System.Drawing.ColorTranslator.FromHtml("#3C3C3C");          // Medium dark
+            System.Drawing.Color colorAccent = System.Drawing.ColorTranslator.FromHtml("#00D9A3");         // Green accent (like image)
+            System.Drawing.Color colorText = System.Drawing.ColorTranslator.FromHtml("#FFFFFF");           // White text
+            System.Drawing.Color colorTextSecondary = System.Drawing.ColorTranslator.FromHtml("#B0B0B0");  // Gray text
+            System.Drawing.Color colorButtonHover = System.Drawing.ColorTranslator.FromHtml("#00F5B8");    // Lighter green
             
             // Components
             this.panelTop = new Guna.UI2.WinForms.Guna2Panel();
